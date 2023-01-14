@@ -21,16 +21,6 @@ export default function AlertModal({useContents}: AlertModalProps) {
         }]
       }
     ));
-
-
-    // useContents({
-    //   columnTitles: contents.columnTitles,
-    //   rowContents: [...contents.rowContents, {
-    //       alert: (e.target as any)[0].value,
-    //       status: '',
-    //       updates: [],
-    //     }]
-    // })
   }
 
   return (
