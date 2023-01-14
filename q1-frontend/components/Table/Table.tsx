@@ -53,7 +53,7 @@ export default function Table() {
 
   return (
     <>
-      <AlertModal useContents={useContents} />
+      <AlertModal useContents={useContents} contents={contents} />
       <div className={styles.myTable}>
         <div className={styles.row}>
           {contents.columnTitles.map((item) => <div className={styles.item} key={item}>{item}</div>)}
