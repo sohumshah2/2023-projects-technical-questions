@@ -39,17 +39,18 @@ type lassoableAnimal = { type: spaceAnimal["type"], location: location};
 app.get("/lassoable", (req, res) => {
   // TODO: fill me in
 
-  const { cowboy_name } = req.body;
+  const { cowboy_name } = req.query;
   const cowboy = spaceDatabase.find(entity => entity.type === "space_cowboy" && entity.metadata.name === cowboy_name);
-  if (!cowboy || !('lassoLength' in cowboy.metadata)) return {space_animals: []};
-  const cowboy_lasso_length = cowboy.metadata.lassoLength;
-
   let list_of_animals = [] as lassoableAnimal[];
-  for (const entity of spaceDatabase) {
-    if (entity.type !== "space_animal") continue;
-    const distance = Math.sqrt(Math.pow(cowboy.location.x - entity.location.x , 2) + Math.pow(cowboy.location.y - entity.location.y, 2));
-    if (distance <= cowboy_lasso_length) {
-      list_of_animals.push({ type: entity.metadata.type, location: entity.location });
+
+  if (cowboy && 'lassoLength' in cowboy.metadata) {
+    const cowboy_lasso_length = cowboy.metadata.lassoLength;
+    for (const entity of spaceDatabase) {
+      if (entity.type !== "space_animal") continue;
+      const distance = Math.sqrt(Math.pow(cowboy.location.x - entity.location.x , 2) + Math.pow(cowboy.location.y - entity.location.y, 2));
+      if (distance <= cowboy_lasso_length) {
+        list_of_animals.push({ type: entity.metadata.type, location: entity.location });
+      }
     }
   }
   res.json({space_animals: list_of_animals});
